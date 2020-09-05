@@ -7,6 +7,7 @@ using System.Net;
 
 namespace BlazorApp.Helpers
 {
+
     public class AppRouteView : RouteView
     {
         [Inject]
@@ -29,4 +30,5 @@ namespace BlazorApp.Helpers
             }
         }
     }
+
 }

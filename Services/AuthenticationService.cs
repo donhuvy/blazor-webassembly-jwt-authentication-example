@@ -4,14 +4,6 @@ using System.Threading.Tasks;
 
 namespace BlazorApp.Services
 {
-    public interface IAuthenticationService
-    {
-        User User { get; }
-        Task Initialize();
-        Task Login(string username, string password);
-        Task Logout();
-    }
-
     public class AuthenticationService : IAuthenticationService
     {
         private IHttpService _httpService;
@@ -20,11 +12,8 @@ namespace BlazorApp.Services
 
         public User User { get; private set; }
 
-        public AuthenticationService(
-            IHttpService httpService,
-            NavigationManager navigationManager,
-            ILocalStorageService localStorageService
-        ) {
+        public AuthenticationService(IHttpService httpService, NavigationManager navigationManager, ILocalStorageService localStorageService)
+        {
             _httpService = httpService;
             _navigationManager = navigationManager;
             _localStorageService = localStorageService;
@@ -48,4 +37,5 @@ namespace BlazorApp.Services
             _navigationManager.NavigateTo("login");
         }
     }
+
 }

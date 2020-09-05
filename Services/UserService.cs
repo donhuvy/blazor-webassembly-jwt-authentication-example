@@ -4,10 +4,6 @@ using System.Threading.Tasks;
 
 namespace BlazorApp.Services
 {
-    public interface IUserService
-    {
-        Task<IEnumerable<User>> GetAll();
-    }
 
     public class UserService : IUserService
     {
@@ -23,4 +19,5 @@ namespace BlazorApp.Services
             return await _httpService.Get<IEnumerable<User>>("/users");
         }
     }
+
 }

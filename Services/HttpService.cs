@@ -13,11 +13,6 @@ using System.Threading.Tasks;
 
 namespace BlazorApp.Services
 {
-    public interface IHttpService
-    {
-        Task<T> Get<T>(string uri);
-        Task<T> Post<T>(string uri, object value);
-    }
 
     public class HttpService : IHttpService
     {
@@ -31,7 +26,8 @@ namespace BlazorApp.Services
             NavigationManager navigationManager,
             ILocalStorageService localStorageService,
             IConfiguration configuration
-        ) {
+        )
+        {
             _httpClient = httpClient;
             _navigationManager = navigationManager;
             _localStorageService = localStorageService;

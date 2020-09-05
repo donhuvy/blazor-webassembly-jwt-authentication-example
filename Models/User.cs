@@ -1,5 +1,6 @@
 namespace BlazorApp.Models
 {
+
     public class User
     {
         public int Id { get; set; }
@@ -8,4 +9,5 @@ namespace BlazorApp.Models
         public string Username { get; set; }
         public string Token { get; set; }
     }
+
 }

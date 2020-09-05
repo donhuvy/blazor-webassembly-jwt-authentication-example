@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlazorApp.Helpers
 {
+
     public class FakeBackendHandler : HttpClientHandler
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -16,7 +17,6 @@ namespace BlazorApp.Helpers
             var users = new[] { new { Id = 1, Username = "test", Password = "test", FirstName = "Test", LastName = "User" } };
             var path = request.RequestUri.AbsolutePath;
             var method = request.Method;
-
             if (path == "/users/authenticate" && method == HttpMethod.Post)
             {
                 return await authenticate();
@@ -27,22 +27,21 @@ namespace BlazorApp.Helpers
             }
             else
             {
-                // pass through any requests not handled above
+                // Pass through any requests not handled above.
                 return await base.SendAsync(request, cancellationToken);
             }
-
-            // route functions
-            
+            // Route functions.
             async Task<HttpResponseMessage> authenticate()
             {
                 var bodyJson = await request.Content.ReadAsStringAsync();
                 var body = JsonSerializer.Deserialize<Dictionary<string, string>>(bodyJson);
                 var user = users.FirstOrDefault(x => x.Username == body["username"] && x.Password == body["password"]);
-
                 if (user == null)
+                {
                     return await error("Username or password is incorrect");
-
-                return await ok(new {
+                }    
+                return await ok(new
+                {
                     Id = user.Id,
                     Username = user.Username,
                     FirstName = user.FirstName,
@@ -50,15 +49,12 @@ namespace BlazorApp.Helpers
                     Token = "fake-jwt-token"
                 });
             }
-
             async Task<HttpResponseMessage> getUsers()
             {
                 if (!isLoggedIn()) return await unauthorized();
                 return await ok(users);
             }
-
-            // helper functions
-
+            // Helper functions.
             async Task<HttpResponseMessage> ok(object body)
             {
                 return await jsonResponse(HttpStatusCode.OK, body);
@@ -81,17 +77,16 @@ namespace BlazorApp.Helpers
                     StatusCode = statusCode,
                     Content = new StringContent(JsonSerializer.Serialize(content), Encoding.UTF8, "application/json")
                 };
-                
-                // delay to simulate real api call
+                // Delay to simulate real api call.
                 await Task.Delay(500);
-
                 return response;
             }
 
             bool isLoggedIn()
             {
                 return request.Headers.Authorization?.Parameter == "fake-jwt-token";
-            } 
+            }
         }
     }
+
 }

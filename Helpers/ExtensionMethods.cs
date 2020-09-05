@@ -5,6 +5,7 @@ using System.Web;
 
 namespace BlazorApp.Helpers
 {
+
     public static class ExtensionMethods
     {
         public static NameValueCollection QueryString(this NavigationManager navigationManager)
@@ -17,4 +18,5 @@ namespace BlazorApp.Helpers
             return navigationManager.QueryString()[key];
         }
     }
+
 }
